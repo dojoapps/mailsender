@@ -12,7 +12,7 @@ using DojoApps.MailSender.Tasks;
 
 namespace DojoApps.MailSender.Controllers
 {
-    public class HomeController : RavenController
+    public class MailController : RavenController
     {
         [HttpPost]
         public HttpResponseMessage Send([FromBody]MailRequest request)
@@ -32,10 +32,15 @@ namespace DojoApps.MailSender.Controllers
             if ( request.Async == true )
             {
                 TaskExecutor.ExecuteTask(new SendEmailTask(configuration, request));
-            } else
+            } 
+            else
             {
                 var sendEmail = new SendEmailTask(configuration, request);
-                sendEmail.Run(Session);
+                if (sendEmail.Run(Session) == false )
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                                                       "Não foi possível enviar este email");
+                }
 
             }
 
