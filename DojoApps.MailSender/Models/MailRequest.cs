@@ -20,5 +20,10 @@ namespace DojoApps.MailSender.Models
         public bool Async { get; set; }
 
         public string RedirectUri { get; set; }
+
+        public MailRequest()
+        {
+            Extras = new Dictionary<string, string>();
+        }
     }
 }

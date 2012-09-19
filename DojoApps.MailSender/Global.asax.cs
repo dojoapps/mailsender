@@ -1,4 +1,5 @@
-﻿using DojoApps.MailSender.Helpers.Tasks;
+﻿using System.Web.Http.ModelBinding;
+using DojoApps.MailSender.Helpers.Tasks;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
@@ -32,6 +33,7 @@ namespace DojoApps.MailSender
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("json", "true", "application/json"));
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             RavenInit();
         }
