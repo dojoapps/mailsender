@@ -24,7 +24,7 @@ namespace DojoApps.MailSender.Controllers
 
             var configuration = Session.Load<MailConfiguration>(request.HostId);
 
-            if (configuration == null)
+            if (configuration == null || !configuration.Recipients.Any(x => x.Equals(request.Destination, StringComparison.InvariantCultureIgnoreCase)))
             {
                 return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Invalid request");
             }
