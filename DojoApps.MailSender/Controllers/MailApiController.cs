@@ -12,7 +12,7 @@ using DojoApps.MailSender.Tasks;
 
 namespace DojoApps.MailSender.Controllers
 {
-    public class MailController : RavenController
+    public class MailApiController : RavenApiController
     {
         [HttpPost]
         public HttpResponseMessage Send([FromBody]MailRequest request)
@@ -22,7 +22,7 @@ namespace DojoApps.MailSender.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Invalid request");
             }
 
-            var configuration = Session.Load<MailConfiguration>(request.HostId);
+            var configuration = DocumentSession.Load<MailConfiguration>(request.HostId);
 
             if (configuration == null || !configuration.Recipients.Any(x => x.Equals(request.Destination, StringComparison.InvariantCultureIgnoreCase)))
             {
@@ -36,7 +36,7 @@ namespace DojoApps.MailSender.Controllers
             else
             {
                 var sendEmail = new SendEmailTask(configuration, request);
-                if (sendEmail.Run(Session) == false )
+                if (sendEmail.Run(DocumentSession) == false )
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                                                        "Não foi possível enviar este email");

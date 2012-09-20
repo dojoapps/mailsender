@@ -1,0 +1,27 @@
+﻿@model List<DojoApps.MailSender.Models.MailConfiguration>
+
+@{
+    ViewBag.Title = "Configurations";
+}
+
+<a href="@Url.Action("Details")" class="btn btn-primary">Criar Novo</a>
+
+<table class="table table-striped" style="margin-top: 50px">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var conf in Model)
+        {
+            <tr>
+                <td>@conf.Id.ToIntId()</td>
+                <td>@conf.Name</td>
+                <td>@Html.ActionLink("editar", "Details", new { id = conf.Id.ToIntId() })</td>
+            </tr>
+        }
+    </tbody>
+</table>

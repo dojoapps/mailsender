@@ -1,0 +1,20 @@
+﻿@model DojoApps.MailSender.Models.MailConfiguration
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+@using(Html.BeginBootstrapForm("Save", routeValues: new { id = (Model.Id != null) ? Model.Id.ToIntId() : (int?)null }, htmlAttributes: new { @class = "form-horizontal"}))
+{
+    @Html.BootstrapControlGroupFor(x => x.Name)
+    @Html.BootstrapControlGroupFor(x => x.Recipients)
+    @Html.BootstrapControlGroupFor(x => x.SmtpHost)
+    @Html.BootstrapControlGroupFor(x => x.SmtpPort)
+    @Html.BootstrapControlGroupFor(x => x.SmtpEnableSsl)
+    @Html.BootstrapControlGroupFor(x => x.SmtpUser)
+    @Html.BootstrapControlGroupFor(x => x.SmtpPassword)
+
+    @Html.BootstrapFormActions("Salvar")
+}

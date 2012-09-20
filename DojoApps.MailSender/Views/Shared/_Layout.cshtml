@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/css")
+    </head>
+
+    <body id="@ViewBag.BodyId" class="@ViewBag.BodyClass">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">DojoMailer</a>
+                    <ul class="nav">
+                        <li class="active"><a href="/admin">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <div class="container">
+      @RenderBody()
+    </div>
+
+        @Scripts.Render("~/bundles/base")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

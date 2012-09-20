@@ -1,0 +1,15 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Faça Login</h2>
+
+@using(Html.BeginBootstrapForm(action:"Login"))
+{
+    @Html.Label("pwd")
+    @Html.TextBox("pwd")
+
+    @Html.BootstrapFormActions("Salvar")
+}
