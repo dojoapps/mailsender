@@ -36,7 +36,7 @@ namespace DojoApps.MailSender.Controllers
 
         public ActionResult Index(int page=0)
         {
-            var configurations = DocumentSession.Query<MailConfiguration>().ToList();
+            var configurations = DocumentSession.Query<MailConfiguration>().Customize(x => x.WaitForNonStaleResultsAsOfNow()).ToList();
 
             return View(configurations);
         }
@@ -53,10 +53,9 @@ namespace DojoApps.MailSender.Controllers
                 {
                     return HttpNotFound();
                 }
-
-                conf.Recipients = new List<string>() { string.Join(",", conf.Recipients) };
-
             }
+
+            conf.Recipients = new List<string>() { string.Join(",", conf.Recipients) };
 
             return View(conf);
         }
@@ -84,6 +83,8 @@ namespace DojoApps.MailSender.Controllers
             conf.SmtpPassword = input.SmtpPassword;
             conf.SmtpUser = input.SmtpUser;
             conf.SmtpPort = input.SmtpPort;
+
+            conf.Recipients.ForEach(x => x = x.Trim());
 
             DocumentSession.SaveChanges();
 

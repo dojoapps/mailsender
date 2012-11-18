@@ -9,7 +9,11 @@
 @using(Html.BeginBootstrapForm("Save", routeValues: new { id = (Model.Id != null) ? Model.Id.ToIntId() : (int?)null }, htmlAttributes: new { @class = "form-horizontal"}))
 {
     @Html.BootstrapControlGroupFor(x => x.Name)
-    @Html.BootstrapControlGroupFor(x => x.Recipients)
+    @Html.BootstrapControlGroupFor(x => x.From)
+    using (Html.BeginBootstrapControlGroup(x => x.Recipients))
+    {
+        @Html.TextBoxFor(x => x.Recipients[0])
+    }
     @Html.BootstrapControlGroupFor(x => x.SmtpHost)
     @Html.BootstrapControlGroupFor(x => x.SmtpPort)
     @Html.BootstrapControlGroupFor(x => x.SmtpEnableSsl)
