@@ -19,14 +19,14 @@ namespace DojoApps.MailSender.Controllers
         {
             if (request == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Invalid request");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid request");
             }
 
             var configuration = DocumentSession.Load<MailConfiguration>(request.HostId);
 
             if (configuration == null || !configuration.Recipients.Any(x => x.Equals(request.Destination, StringComparison.InvariantCultureIgnoreCase)))
             {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Invalid request");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid request");
             }
 
             if ( request.Async == true )
@@ -39,12 +39,12 @@ namespace DojoApps.MailSender.Controllers
                 if (sendEmail.Run(DocumentSession) == false )
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                                                       "Não foi possível enviar este email");
+                                                       "Unable to send the email");
                 }
 
             }
 
-            var response = Request.CreateResponse(HttpStatusCode.Moved);
+            var response = Request.CreateResponse(HttpStatusCode.OK);
             response.Headers.Location = new Uri(request.RedirectUri);
 
             return response;
