@@ -30,8 +30,11 @@ namespace DojoApps.MailSender.Controllers
             if ( request.Async )
             {
                 TaskExecutor.ExecuteTask(new SendEmailTask(configuration, request));
-                var response = Request.CreateResponse(HttpStatusCode.OK);
-                response.Headers.Location = new Uri(request.RedirectUri);
+                var response = Request.CreateResponse(HttpStatusCode.OK, new { Message = "Message sent" });
+                if (!string.IsNullOrEmpty(request.RedirectUri))
+                {
+                    response.Headers.Location = new Uri(request.RedirectUri);
+                }
 
                 return response;
             } 
