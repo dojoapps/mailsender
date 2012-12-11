@@ -30,6 +30,10 @@ namespace DojoApps.MailSender.Controllers
             if ( request.Async )
             {
                 TaskExecutor.ExecuteTask(new SendEmailTask(configuration, request));
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Headers.Location = new Uri(request.RedirectUri);
+
+                return response;
             } 
             else
             {
@@ -40,12 +44,12 @@ namespace DojoApps.MailSender.Controllers
                                                        "Unable to send the email");
                 }
 
+                var response = Request.CreateResponse(HttpStatusCode.Redirect);
+                response.Headers.Location = new Uri(request.RedirectUri);
+
+                return response;
+
             }
-
-            var response = Request.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Location = new Uri(request.RedirectUri);
-
-            return response;
         }
     }
 }
