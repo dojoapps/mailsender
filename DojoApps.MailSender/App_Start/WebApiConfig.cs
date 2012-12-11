@@ -14,6 +14,12 @@ namespace DojoApps.MailSender
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "SendMail",
+                routeTemplate: "api/mail/send",
+                defaults: new { controller = "MailApi", action = "Send"}
+                );
         }
     }
 }

@@ -5,9 +5,7 @@ using DojoApps.MailSender.Helpers;
 using DojoApps.MailSender.Helpers.Tasks;
 using DojoApps.MailSender.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using DojoApps.MailSender.Tasks;
 
 namespace DojoApps.MailSender.Controllers
@@ -29,7 +27,7 @@ namespace DojoApps.MailSender.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid request");
             }
 
-            if ( request.Async == true )
+            if ( request.Async )
             {
                 TaskExecutor.ExecuteTask(new SendEmailTask(configuration, request));
             } 
